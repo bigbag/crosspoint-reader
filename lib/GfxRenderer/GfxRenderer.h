@@ -46,7 +46,9 @@ class GfxRenderer {
   int getLineHeight(int fontId) const;
 
   // Low level functions
+  uint8_t* getFrameBuffer() const;
   void swapBuffers() const;
+  void grayscaleRevert() const;
   void copyGrayscaleLsbBuffers() const;
   void copyGrayscaleMsbBuffers() const;
   void displayGrayBuffer() const;
