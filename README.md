@@ -1,22 +1,29 @@
-# CrossPoint Reader
+# Papyrix
 
-Firmware for the **Xteink X4** e-paper display reader (unaffiliated with Xteink).
+A lightweight, user-friendly firmware fork for the **Xteink X4** e-paper display reader.
 Built using **PlatformIO** and targeting the **ESP32-C3** microcontroller.
 
-CrossPoint Reader is a purpose-built firmware designed to be a drop-in, fully open-source replacement for the official 
-Xteink firmware. It aims to match or improve upon the standard EPUB reading experience.
+Papyrix is a fork of [CrossPoint Reader](https://github.com/daveallie/crosspoint-reader), focused on creating a light, streamlined reading experience with improved UI defaults.
 
 ![](./docs/images/cover.jpg)
 
+## Fork Information
+
+**Papyrix** (from "papyrus" - ancient scrolls) is a community fork with the goal of providing a lighter, more user-friendly firmware version while maintaining full compatibility with the original CrossPoint Reader.
+
+### Changes from Original
+
+- **Font size setting** - Added configurable font sizes (Small/Medium/Large)
+- **Redesigned home screen** - New 2x2 grid layout for better navigation
+- **Improved UI font** - Updated from Ubuntu 10pt to 12pt for better readability
+- **Better default font size** - Changed to 16pt Normal for comfortable reading
+
 ## Motivation
 
-E-paper devices are fantastic for reading, but most commercially available readers are closed systems with limited 
-customisation. The **Xteink X4** is an affordable, e-paper device, however the official firmware remains closed.
-CrossPoint exists partly as a fun side-project and partly to open up the ecosystem and truely unlock the device's
-potential.
+E-paper devices are fantastic for reading, but most commercially available readers are closed systems with limited customisation. The **Xteink X4** is an affordable e-paper device, however the official firmware remains closed.
 
-CrossPoint Reader aims to:
-* Provide a **fully open-source alternative** to the official firmware.
+Papyrix aims to:
+* Provide a **lightweight, open-source alternative** to the official firmware.
 * Offer a **document reader** capable of handling EPUB content on constrained hardware.
 * Support **customisable font, layout, and display** options.
 * Run purely on the **Xteink X4 hardware**.
@@ -36,31 +43,14 @@ This project is **not affiliated with Xteink**; it's built as a community projec
   - [ ] Cover sleep screen
 - [x] Wifi book upload
 - [ ] Wifi OTA updates
-- [ ] Configurable font, layout, and display options
+- [x] Configurable font size options
 - [ ] Screen rotation
 
-See [the user guide](./USER_GUIDE.md) for instructions on operating CrossPoint.
+See [the user guide](./USER_GUIDE.md) for instructions on operating Papyrix.
 
 ## Installing
 
-### Web (latest firmware)
-
-1. Connect your Xteink X4 to your computer via USB-C
-2. Go to https://xteink.dve.al/ and click "Flash CrossPoint firmware"
-
-To revert back to the official firmware, you can flash the latest official firmware from https://xteink.dve.al/, or swap
-back to the other partition using the "Swap boot partition" button here https://xteink.dve.al/debug.
-
-### Web (specific firmware version)
-
-1. Connect your Xteink X4 to your computer via USB-C
-2. Download the `firmware.bin` file from the release of your choice via the [releases page](https://github.com/daveallie/crosspoint-reader/releases)
-3. Go to https://xteink.dve.al/ and flash the firmware file using the "OTA fast flash controls" section
-
-To revert back to the official firmware, you can flash the latest official firmware from https://xteink.dve.al/, or swap
-back to the other partition using the "Swap boot partition" button here https://xteink.dve.al/debug.
-
-### Manual
+### Manual Build
 
 See [Development](#development) below.
 
@@ -75,13 +65,23 @@ See [Development](#development) below.
 
 ### Checking out the code
 
-CrossPoint uses PlatformIO for building and flashing the firmware. To get started, clone the repository:
+Papyrix uses PlatformIO for building and flashing the firmware. To get started, clone the repository:
 
 ```
-git clone --recursive https://github.com/daveallie/crosspoint-reader
+git clone --recursive https://github.com/pliashkou/papyrix
 
 # Or, if you've already cloned without --recursive:
 git submodule update --init --recursive
+```
+
+### Building
+
+```sh
+# Build firmware
+make build
+
+# Or using PlatformIO directly
+pio run
 ```
 
 ### Flashing your device
@@ -89,19 +89,19 @@ git submodule update --init --recursive
 Connect your Xteink X4 to your computer via USB-C and run the following command.
 
 ```sh
+make flash
+
+# Or using PlatformIO directly
 pio run --target upload
 ```
 
 ## Internals
 
-CrossPoint Reader is pretty aggressive about caching data down to the SD card to minimise RAM usage. The ESP32-C3 only
-has ~380KB of usable RAM, so we have to be careful. A lot of the decisions made in the design of the firmware were based
-on this constraint.
+Papyrix is pretty aggressive about caching data down to the SD card to minimise RAM usage. The ESP32-C3 only has ~380KB of usable RAM, so we have to be careful. A lot of the decisions made in the design of the firmware were based on this constraint.
 
 ### Data caching
 
-The first time chapters of a book are loaded, they are cached to the SD card. Subsequent loads are served from the 
-cache. This cache directory exists at `.crosspoint` on the SD card. The structure is as follows:
+The first time chapters of a book are loaded, they are cached to the SD card. Subsequent loads are served from the cache. This cache directory exists at `.crosspoint` on the SD card. The structure is as follows:
 
 
 ```
@@ -118,10 +118,9 @@ cache. This cache directory exists at `.crosspoint` on the SD card. The structur
 └── epub_189013891/
 ```
 
-Deleting the `.crosspoint` directory will clear the entire cache. 
+Deleting the `.crosspoint` directory will clear the entire cache.
 
-Due the way it's currently implemented, the cache is not automatically cleared when a book is deleted and moving a book
-file will use a new cache directory, resetting the reading progress.
+Due the way it's currently implemented, the cache is not automatically cleared when a book is deleted and moving a book file will use a new cache directory, resetting the reading progress.
 
 For more details on the internal file structures, see the [file formats document](./docs/file-formats.md).
 
@@ -129,19 +128,15 @@ For more details on the internal file structures, see the [file formats document
 
 Contributions are very welcome!
 
-If you're looking for a way to help out, take a look at the [ideas discussion board](https://github.com/daveallie/crosspoint-reader/discussions/categories/ideas).
-If there's something there you'd like to work on, leave a comment so that we can avoid duplicated effort.
-
 ### To submit a contribution:
 
 1. Fork the repo
-2. Create a branch (`feature/dithering-improvement`)
+2. Create a branch (`feature/your-feature`)
 3. Make changes
 4. Submit a PR
 
 ---
 
-CrossPoint Reader is **not affiliated with Xteink or any manufacturer of the X4 hardware**.
+Papyrix is a fork of [CrossPoint Reader](https://github.com/daveallie/crosspoint-reader) by Dave Allie.
 
-Huge shoutout to [**diy-esp32-epub-reader** by atomic14](https://github.com/atomic14/diy-esp32-epub-reader), which was a project I took a lot of inspiration from as I
-was making CrossPoint.
+**Not affiliated with Xteink or any manufacturer of the X4 hardware**.

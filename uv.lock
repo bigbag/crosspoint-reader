@@ -17,7 +17,7 @@ wheels = [
 ]
 
 [[package]]
-name = "inkflow-reader"
+name = "papyrix-reader"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [

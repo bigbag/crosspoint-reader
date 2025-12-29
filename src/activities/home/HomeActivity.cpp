@@ -102,7 +102,7 @@ void HomeActivity::render() const {
   const auto pageWidth = renderer.getScreenWidth();
   const auto pageHeight = renderer.getScreenHeight();
 
-  renderer.drawCenteredText(READER_FONT_ID, 10, "CrossPoint Reader", true, BOLD);
+  renderer.drawCenteredText(READER_FONT_ID, 10, "Papyrix Reader", true, BOLD);
 
   // Grid layout constants
   constexpr int cellWidth = 180;
