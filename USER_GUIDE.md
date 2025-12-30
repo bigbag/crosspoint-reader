@@ -62,7 +62,7 @@ The Files screen acts as a folder and file browser.
   and down through folders and books.
 * **Open Selection:** Press **Confirm** to open a folder or read a selected book.
 
-> **Note:** Both EPUB (.epub) and XTC (.xtc, .xtch) file formats are supported.
+> **Note:** Both EPUB (.epub) and XTC (.xtc, .xtch) file formats are supported. The device supports both FAT32 and exFAT formatted SD cards.
 
 ### 3.3 Reading Screen
 

@@ -37,6 +37,7 @@ This project is **not affiliated with Xteink**; it's built as a community projec
 - [x] EPUB parsing and rendering
 - [ ] Image support within EPUB
 - [x] Saved reading position
+- [x] exFAT SD card support (in addition to FAT32)
 - [x] File explorer with file picker
   - [x] Basic EPUB picker from root directory
   - [x] Support nested folders
