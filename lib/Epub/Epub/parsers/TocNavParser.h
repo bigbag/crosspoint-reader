@@ -27,8 +27,6 @@ class TocNavParser final : public Print {
 
   // Track nesting depth for <ol> elements to determine TOC depth
   uint8_t olDepth = 0;
-  // Track if we're in the correct nav (epub:type="toc")
-  bool inTocNav = false;
   // Current entry data being collected
   std::string currentLabel;
   std::string currentHref;

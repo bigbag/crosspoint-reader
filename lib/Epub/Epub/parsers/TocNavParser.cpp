@@ -86,7 +86,6 @@ void XMLCALL TocNavParser::startElement(void* userData, const XML_Char* name, co
   if (self->state >= IN_BODY && strcmp(name, "nav") == 0) {
     for (int i = 0; atts[i]; i += 2) {
       if ((strcmp(atts[i], "epub:type") == 0 || strcmp(atts[i], "type") == 0) && strcmp(atts[i + 1], "toc") == 0) {
-        self->inTocNav = true;
         self->state = IN_NAV_TOC;
         Serial.printf("[%lu] [NAV] Found nav toc element\n", millis());
         return;
@@ -96,7 +95,7 @@ void XMLCALL TocNavParser::startElement(void* userData, const XML_Char* name, co
   }
 
   // Only process ol/li/a if we're inside the toc nav
-  if (!self->inTocNav) {
+  if (self->state < IN_NAV_TOC) {
     return;
   }
 
@@ -130,7 +129,7 @@ void XMLCALL TocNavParser::characterData(void* userData, const XML_Char* s, cons
   auto* self = static_cast<TocNavParser*>(userData);
 
   // Only collect text when inside an anchor within the TOC nav
-  if (self->state == IN_ANCHOR && self->inTocNav) {
+  if (self->state == IN_ANCHOR) {
     self->currentLabel.append(s, len);
   }
 }
@@ -162,12 +161,12 @@ void XMLCALL TocNavParser::endElement(void* userData, const XML_Char* name) {
     return;
   }
 
-  if (strcmp(name, "li") == 0 && (self->state == IN_LI || self->state == IN_OL) && self->inTocNav) {
+  if (strcmp(name, "li") == 0 && (self->state == IN_LI || self->state == IN_OL)) {
     self->state = IN_OL;
     return;
   }
 
-  if (strcmp(name, "ol") == 0 && self->inTocNav) {
+  if (strcmp(name, "ol") == 0 && self->state >= IN_NAV_TOC) {
     self->olDepth--;
     if (self->olDepth == 0) {
       self->state = IN_NAV_TOC;
@@ -177,8 +176,7 @@ void XMLCALL TocNavParser::endElement(void* userData, const XML_Char* name) {
     return;
   }
 
-  if (strcmp(name, "nav") == 0 && self->inTocNav) {
-    self->inTocNav = false;
+  if (strcmp(name, "nav") == 0 && self->state >= IN_NAV_TOC) {
     self->state = IN_BODY;
     Serial.printf("[%lu] [NAV] Finished parsing nav toc\n", millis());
     return;
