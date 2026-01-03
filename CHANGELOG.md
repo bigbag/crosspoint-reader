@@ -1,5 +1,23 @@
 
 
+## v0.7.0 (2026-01-03)
+
+
+
+## v0.7.1 (2026-01-03)
+
+*  Update CHANGELOG [[Pavel Liashkov](mailto:pavel.liashkov@protonmail.com)]
+*  Fix keyboard view [[Pavel Liashkov](mailto:pavel.liashkov@protonmail.com)]
+*  Fix keyboard view [[Pavel Liashkov](mailto:pavel.liashkov@protonmail.com)]
+*  Add Net Library (OPDS) for browsing and downloading books [[Pavel Liashkov](mailto:pavel.liashkov@protonmail.com)]
+*  Refactor: Add FsHelpers::isHiddenFsItem() to consolidate duplicate logic [[Pavel Liashkov](mailto:pavel.liashkov@protonmail.com)]
+*  Fix OPDS: match Settings UI style, fix URL building, improve SSL timeout [[Pavel Liashkov](mailto:pavel.liashkov@protonmail.com)]
+*  Fix OPDS server list: display on first load, correct initial selection [[Pavel Liashkov](mailto:pavel.liashkov@protonmail.com)]
+*  Add selection indicator to OPDS server list [[Pavel Liashkov](mailto:pavel.liashkov@protonmail.com)]
+*  Fix Settings navigation: return to correct view and preserve selection [[Pavel Liashkov](mailto:pavel.liashkov@protonmail.com)]
+*  Show Back instead of Home in file browser when in subdirectory [[Pavel Liashkov](mailto:pavel.liashkov@protonmail.com)]
+
+
 ## v0.6.0 (2026-01-02)
 
 *  Filter system directories from book browser [[Pavel Liashkov](mailto:pavel.liashkov@protonmail.com)]
