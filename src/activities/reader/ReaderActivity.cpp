@@ -2,6 +2,7 @@
 
 #include <esp_heap_caps.h>
 
+#include "config.h"
 #include "Epub.h"
 #include "EpubReaderActivity.h"
 #include "FileSelectionActivity.h"
@@ -34,7 +35,7 @@ std::unique_ptr<Epub> ReaderActivity::loadEpub(const std::string& path) {
     return nullptr;
   }
 
-  auto epub = std::unique_ptr<Epub>(new Epub(path, "/.crosspoint"));
+  auto epub = std::unique_ptr<Epub>(new Epub(path, PAPYRIX_DIR));
   if (epub->load()) {
     return epub;
   }
@@ -49,7 +50,7 @@ std::unique_ptr<Xtc> ReaderActivity::loadXtc(const std::string& path) {
     return nullptr;
   }
 
-  auto xtc = std::unique_ptr<Xtc>(new Xtc(path, "/.crosspoint"));
+  auto xtc = std::unique_ptr<Xtc>(new Xtc(path, PAPYRIX_DIR));
   if (xtc->load()) {
     return xtc;
   }

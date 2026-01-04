@@ -4,16 +4,17 @@
 #include <SDCardManager.h>
 #include <Serialization.h>
 
+#include "config.h"
+
 namespace {
 constexpr uint8_t STATE_FILE_VERSION = 1;
-constexpr char STATE_FILE[] = "/.crosspoint/state.bin";
 }  // namespace
 
 CrossPointState CrossPointState::instance;
 
 bool CrossPointState::saveToFile() const {
   FsFile outputFile;
-  if (!SdMan.openFileForWrite("CPS", STATE_FILE, outputFile)) {
+  if (!SdMan.openFileForWrite("CPS", PAPYRIX_STATE_FILE, outputFile)) {
     return false;
   }
 
@@ -25,7 +26,7 @@ bool CrossPointState::saveToFile() const {
 
 bool CrossPointState::loadFromFile() {
   FsFile inputFile;
-  if (!SdMan.openFileForRead("CPS", STATE_FILE, inputFile)) {
+  if (!SdMan.openFileForRead("CPS", PAPYRIX_STATE_FILE, inputFile)) {
     return false;
   }
 

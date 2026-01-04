@@ -193,11 +193,11 @@ The ESP32 WiFi stack allocates ~100KB and fragments heap memory in a way that ca
 
 ### Data caching
 
-The first time chapters of a book are loaded, they are cached to the SD card. Subsequent loads are served from the cache. This cache directory exists at `.crosspoint` on the SD card. The structure is as follows:
+The first time chapters of a book are loaded, they are cached to the SD card. Subsequent loads are served from the cache. This cache directory exists at `.papyrix` on the SD card. The structure is as follows:
 
 
 ```
-.crosspoint/
+.papyrix/
 ├── epub_12471232/       # Each EPUB is cached to a subdirectory named `epub_<hash>`
 │   ├── progress.bin     # Stores reading progress (chapter, page, etc.)
 │   ├── cover.bmp        # Book cover image (once generated)
@@ -210,7 +210,7 @@ The first time chapters of a book are loaded, they are cached to the SD card. Su
 └── epub_189013891/
 ```
 
-Deleting the `.crosspoint` directory will clear the entire cache.
+Deleting the `.papyrix` directory will clear the entire cache.
 
 Due the way it's currently implemented, the cache is not automatically cleared when a book is deleted and moving a book file will use a new cache directory, resetting the reading progress.
 

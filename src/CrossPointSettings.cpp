@@ -4,6 +4,8 @@
 #include <SDCardManager.h>
 #include <Serialization.h>
 
+#include "config.h"
+
 // Initialize the static instance
 CrossPointSettings CrossPointSettings::instance;
 
@@ -12,15 +14,14 @@ namespace {
 constexpr uint8_t SETTINGS_FILE_VERSION = 2;
 // Increment this when adding new persisted settings fields
 constexpr uint8_t SETTINGS_COUNT = 12;
-constexpr char SETTINGS_FILE[] = "/.crosspoint/settings.bin";
 }  // namespace
 
 bool CrossPointSettings::saveToFile() const {
   // Make sure the directory exists
-  SdMan.mkdir("/.crosspoint");
+  SdMan.mkdir(PAPYRIX_DIR);
 
   FsFile outputFile;
-  if (!SdMan.openFileForWrite("CPS", SETTINGS_FILE, outputFile)) {
+  if (!SdMan.openFileForWrite("CPS", PAPYRIX_SETTINGS_FILE, outputFile)) {
     return false;
   }
 
@@ -47,7 +48,7 @@ bool CrossPointSettings::saveToFile() const {
 
 bool CrossPointSettings::loadFromFile() {
   FsFile inputFile;
-  if (!SdMan.openFileForRead("CPS", SETTINGS_FILE, inputFile)) {
+  if (!SdMan.openFileForRead("CPS", PAPYRIX_SETTINGS_FILE, inputFile)) {
     return false;
   }
 

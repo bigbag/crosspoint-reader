@@ -199,7 +199,7 @@ void SleepActivity::renderCoverSleepScreen() const {
   // Check if the current book is XTC or EPUB
   if (isXtcFile(APP_STATE.openEpubPath)) {
     // Handle XTC file
-    Xtc lastXtc(APP_STATE.openEpubPath, "/.crosspoint");
+    Xtc lastXtc(APP_STATE.openEpubPath, PAPYRIX_DIR);
     if (!lastXtc.load()) {
       Serial.println("[SLP] Failed to load last XTC");
       return renderDefaultSleepScreen();
@@ -213,7 +213,7 @@ void SleepActivity::renderCoverSleepScreen() const {
     coverBmpPath = lastXtc.getCoverBmpPath();
   } else {
     // Handle EPUB file
-    Epub lastEpub(APP_STATE.openEpubPath, "/.crosspoint");
+    Epub lastEpub(APP_STATE.openEpubPath, PAPYRIX_DIR);
     if (!lastEpub.load()) {
       Serial.println("[SLP] Failed to load last epub");
       return renderDefaultSleepScreen();

@@ -41,7 +41,7 @@ void HomeActivity::onEnter() {
 
     if (ext5 == ".epub") {
       // Always try to load EPUB metadata for home screen display
-      Epub epub(APP_STATE.openEpubPath, "/.crosspoint");
+      Epub epub(APP_STATE.openEpubPath, PAPYRIX_DIR);
       if (epub.load(false)) {
         if (!epub.getTitle().empty()) {
           lastBookTitle = std::string(epub.getTitle());

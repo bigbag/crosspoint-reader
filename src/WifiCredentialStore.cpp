@@ -4,15 +4,14 @@
 #include <SDCardManager.h>
 #include <Serialization.h>
 
+#include "config.h"
+
 // Initialize the static instance
 WifiCredentialStore WifiCredentialStore::instance;
 
 namespace {
 // File format version
 constexpr uint8_t WIFI_FILE_VERSION = 1;
-
-// WiFi credentials file path
-constexpr char WIFI_FILE[] = "/.crosspoint/wifi.bin";
 
 // Obfuscation key - "CrossPoint" in ASCII
 // This is NOT cryptographic security, just prevents casual file reading
@@ -29,10 +28,10 @@ void WifiCredentialStore::obfuscate(std::string& data) const {
 
 bool WifiCredentialStore::saveToFile() const {
   // Make sure the directory exists
-  SdMan.mkdir("/.crosspoint");
+  SdMan.mkdir(PAPYRIX_DIR);
 
   FsFile file;
-  if (!SdMan.openFileForWrite("WCS", WIFI_FILE, file)) {
+  if (!SdMan.openFileForWrite("WCS", PAPYRIX_WIFI_FILE, file)) {
     return false;
   }
 
@@ -60,7 +59,7 @@ bool WifiCredentialStore::saveToFile() const {
 
 bool WifiCredentialStore::loadFromFile() {
   FsFile file;
-  if (!SdMan.openFileForRead("WCS", WIFI_FILE, file)) {
+  if (!SdMan.openFileForRead("WCS", PAPYRIX_WIFI_FILE, file)) {
     return false;
   }
 
