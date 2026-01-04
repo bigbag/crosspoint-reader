@@ -5,13 +5,12 @@
 #include <cstring>
 
 #include "IniParser.h"
+#include "config.h"
 
 // Initialize the static instance
 CalibreSettings CalibreSettings::instance;
 
 namespace {
-// Calibre settings INI file path
-constexpr char CALIBRE_FILE[] = "/calibre.ini";
 
 // Maximum lengths to prevent issues with malformed INI files
 constexpr size_t MAX_NAME_LENGTH = 64;
@@ -19,8 +18,9 @@ constexpr size_t MAX_PASSWORD_LENGTH = 64;
 }  // namespace
 
 void CalibreSettings::createDefaultFile() {
+  SdMan.mkdir(CONFIG_DIR);
   FsFile file;
-  if (!SdMan.openFileForWrite("CAL", CALIBRE_FILE, file)) {
+  if (!SdMan.openFileForWrite("CAL", CONFIG_CALIBRE_FILE, file)) {
     Serial.printf("[%lu] [CAL] Failed to create default calibre.ini\n", millis());
     return;
   }
@@ -47,12 +47,12 @@ bool CalibreSettings::loadFromFile() {
   config.deviceName[sizeof(config.deviceName) - 1] = '\0';
   config.password[0] = '\0';
 
-  if (!SdMan.exists(CALIBRE_FILE)) {
+  if (!SdMan.exists(CONFIG_CALIBRE_FILE)) {
     Serial.printf("[%lu] [CAL] No calibre.ini found, creating default\n", millis());
     createDefaultFile();
   }
 
-  const bool parsed = IniParser::parseFile(CALIBRE_FILE, [&](const char* section, const char* key, const char* value) {
+  const bool parsed = IniParser::parseFile(CONFIG_CALIBRE_FILE, [&](const char* section, const char* key, const char* value) {
     if (strcmp(key, "device_name") == 0 && strlen(value) < MAX_NAME_LENGTH && strlen(value) > 0) {
       strncpy(config.deviceName, value, sizeof(config.deviceName) - 1);
       config.deviceName[sizeof(config.deviceName) - 1] = '\0';
@@ -71,8 +71,9 @@ bool CalibreSettings::loadFromFile() {
 }
 
 bool CalibreSettings::saveToFile() {
+  SdMan.mkdir(CONFIG_DIR);
   FsFile file;
-  if (!SdMan.openFileForWrite("CAL", CALIBRE_FILE, file)) {
+  if (!SdMan.openFileForWrite("CAL", CONFIG_CALIBRE_FILE, file)) {
     Serial.printf("[%lu] [CAL] Failed to open calibre.ini for writing\n", millis());
     return false;
   }

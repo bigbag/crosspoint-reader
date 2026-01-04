@@ -1,9 +1,8 @@
 #include "FontManager.h"
+#include "config.h"
 #include <EpdFontLoader.h>
 #include <SDCardManager.h>
 #include <cstring>
-
-static const char* FONTS_DIR = "/fonts";
 
 FontManager& FontManager::instance() {
   static FontManager instance;
@@ -27,7 +26,7 @@ bool FontManager::loadFontFamily(const char* familyName, int fontId) {
 
   // Build base path
   char basePath[64];
-  snprintf(basePath, sizeof(basePath), "%s/%s", FONTS_DIR, familyName);
+  snprintf(basePath, sizeof(basePath), "%s/%s", CONFIG_FONTS_DIR, familyName);
 
   // Check if directory exists
   if (!SdMan.exists(basePath)) {
@@ -130,7 +129,7 @@ void FontManager::unloadAllFonts() {
 std::vector<std::string> FontManager::listAvailableFonts() {
   std::vector<std::string> fonts;
 
-  FsFile dir = SdMan.open(FONTS_DIR);
+  FsFile dir = SdMan.open(CONFIG_FONTS_DIR);
   if (!dir || !dir.isDirectory()) {
     return fonts;
   }
@@ -144,7 +143,7 @@ std::vector<std::string> FontManager::listAvailableFonts() {
       if (name[0] != '.') {
         // Check if it has at least regular.epdfont
         char regularPath[80];
-        snprintf(regularPath, sizeof(regularPath), "%s/%s/regular.epdfont", FONTS_DIR, name);
+        snprintf(regularPath, sizeof(regularPath), "%s/%s/regular.epdfont", CONFIG_FONTS_DIR, name);
         if (SdMan.exists(regularPath)) {
           fonts.push_back(name);
         }
@@ -161,7 +160,7 @@ bool FontManager::fontFamilyExists(const char* familyName) {
   if (!familyName || !*familyName) return false;
 
   char path[80];
-  snprintf(path, sizeof(path), "%s/%s/regular.epdfont", FONTS_DIR, familyName);
+  snprintf(path, sizeof(path), "%s/%s/regular.epdfont", CONFIG_FONTS_DIR, familyName);
   return SdMan.exists(path);
 }
 

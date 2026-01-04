@@ -170,10 +170,10 @@ On first launch, **Project Gutenberg** is preconfigured as a default server, giv
 
 #### Adding More Servers
 
-Servers are configured via the `/opds.ini` file on your SD card:
+Servers are configured via the `/config/opds.ini` file on your SD card:
 
 1. Insert the SD card into your computer
-2. Open or create `/opds.ini` in the root directory
+2. Open or create `/config/opds.ini`
 3. Add servers using the INI format:
 
 ```ini
@@ -199,7 +199,7 @@ Books are downloaded in EPUB format. If a book doesn't have an EPUB version avai
 
 #### Managing Servers
 
-To add, edit, or remove servers, modify the `/opds.ini` file on your SD card.
+To add, edit, or remove servers, modify the `/config/opds.ini` file on your SD card.
 
 Downloaded books are saved to the `/Books/` folder on your SD card.
 
@@ -243,7 +243,7 @@ Calibre can also:
 
 #### Configuration
 
-Customize settings via `/calibre.ini` on your SD card:
+Customize settings via `/config/calibre.ini` on your SD card:
 
 ```ini
 [Settings]

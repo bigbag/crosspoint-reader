@@ -1,10 +1,9 @@
 #include "ThemeManager.h"
 #include "IniParser.h"
+#include "config.h"
 #include <SDCardManager.h>
 #include <algorithm>
 #include <cstring>
-
-static const char* THEMES_DIR = "/themes";
 
 ThemeManager& ThemeManager::instance() {
   static ThemeManager instance;
@@ -23,7 +22,7 @@ bool ThemeManager::loadTheme(const char* name) {
 
   // Build path
   char path[64];
-  snprintf(path, sizeof(path), "%s/%s.theme", THEMES_DIR, name);
+  snprintf(path, sizeof(path), "%s/%s.theme", CONFIG_THEMES_DIR, name);
 
   // Try to load from file
   if (loadFromFile(path)) {
@@ -113,12 +112,12 @@ bool ThemeManager::saveTheme(const char* name) {
   if (!name || !*name) return false;
 
   // Ensure themes directory exists
-  if (!SdMan.exists(THEMES_DIR)) {
-    SdMan.mkdir(THEMES_DIR);
+  if (!SdMan.exists(CONFIG_THEMES_DIR)) {
+    SdMan.mkdir(CONFIG_THEMES_DIR);
   }
 
   char path[64];
-  snprintf(path, sizeof(path), "%s/%s.theme", THEMES_DIR, name);
+  snprintf(path, sizeof(path), "%s/%s.theme", CONFIG_THEMES_DIR, name);
 
   return saveToFile(path, activeTheme);
 }
@@ -184,7 +183,7 @@ std::vector<std::string> ThemeManager::listAvailableThemes() {
   themes.push_back("dark");
 
   // List theme files from SD
-  FsFile dir = SdMan.open(THEMES_DIR);
+  FsFile dir = SdMan.open(CONFIG_THEMES_DIR);
   if (!dir || !dir.isDirectory()) {
     return themes;
   }
@@ -221,20 +220,20 @@ std::vector<std::string> ThemeManager::listAvailableThemes() {
 
 void ThemeManager::createDefaultThemeFiles() {
   // Ensure themes directory exists
-  if (!SdMan.exists(THEMES_DIR)) {
-    SdMan.mkdir(THEMES_DIR);
+  if (!SdMan.exists(CONFIG_THEMES_DIR)) {
+    SdMan.mkdir(CONFIG_THEMES_DIR);
   }
 
   // Create light.theme if it doesn't exist
   char lightPath[64];
-  snprintf(lightPath, sizeof(lightPath), "%s/light.theme", THEMES_DIR);
+  snprintf(lightPath, sizeof(lightPath), "%s/light.theme", CONFIG_THEMES_DIR);
   if (!SdMan.exists(lightPath)) {
     saveToFile(lightPath, BUILTIN_LIGHT_THEME);
   }
 
   // Create dark.theme if it doesn't exist
   char darkPath[64];
-  snprintf(darkPath, sizeof(darkPath), "%s/dark.theme", THEMES_DIR);
+  snprintf(darkPath, sizeof(darkPath), "%s/dark.theme", CONFIG_THEMES_DIR);
   if (!SdMan.exists(darkPath)) {
     saveToFile(darkPath, BUILTIN_DARK_THEME);
   }

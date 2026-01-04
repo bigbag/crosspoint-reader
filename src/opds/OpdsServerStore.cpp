@@ -5,13 +5,12 @@
 #include <cstring>
 
 #include "IniParser.h"
+#include "config.h"
 
 // Initialize the static instance
 OpdsServerStore OpdsServerStore::instance;
 
 namespace {
-// OPDS servers INI file path (user-editable on SD card root)
-constexpr char OPDS_FILE[] = "/opds.ini";
 
 // Maximum lengths to prevent heap exhaustion from malformed INI files
 constexpr size_t MAX_URL_LENGTH = 256;
@@ -20,8 +19,9 @@ constexpr size_t MAX_CREDENTIAL_LENGTH = 128;
 }  // namespace
 
 void OpdsServerStore::createDefaultFile() {
+  SdMan.mkdir(CONFIG_DIR);
   FsFile file;
-  if (!SdMan.openFileForWrite("OSS", OPDS_FILE, file)) {
+  if (!SdMan.openFileForWrite("OSS", CONFIG_OPDS_FILE, file)) {
     Serial.printf("[%lu] [OSS] Failed to create default opds.ini\n", millis());
     return;
   }
@@ -46,7 +46,7 @@ void OpdsServerStore::createDefaultFile() {
 bool OpdsServerStore::loadFromFile() {
   servers.clear();
 
-  if (!SdMan.exists(OPDS_FILE)) {
+  if (!SdMan.exists(CONFIG_OPDS_FILE)) {
     Serial.printf("[%lu] [OSS] No opds.ini found, creating default\n", millis());
     createDefaultFile();
   }
@@ -54,7 +54,7 @@ bool OpdsServerStore::loadFromFile() {
   OpdsServerConfig current;
   std::string currentSection;
 
-  const bool parsed = IniParser::parseFile(OPDS_FILE, [&](const char* section, const char* key, const char* value) {
+  const bool parsed = IniParser::parseFile(CONFIG_OPDS_FILE, [&](const char* section, const char* key, const char* value) {
     // Check if we're in a new section
     if (currentSection != section) {
       // Save previous server if it had a URL

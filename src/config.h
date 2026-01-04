@@ -55,3 +55,10 @@
 #define PAPYRIX_SETTINGS_FILE PAPYRIX_DIR "/settings.bin"
 #define PAPYRIX_STATE_FILE PAPYRIX_DIR "/state.bin"
 #define PAPYRIX_WIFI_FILE PAPYRIX_DIR "/wifi.bin"
+
+// User configuration directory
+#define CONFIG_DIR "/config"
+#define CONFIG_CALIBRE_FILE CONFIG_DIR "/calibre.ini"
+#define CONFIG_OPDS_FILE CONFIG_DIR "/opds.ini"
+#define CONFIG_THEMES_DIR CONFIG_DIR "/themes"
+#define CONFIG_FONTS_DIR CONFIG_DIR "/fonts"

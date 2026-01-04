@@ -33,7 +33,7 @@ Papyrix is a fork of [CrossPoint Reader](https://github.com/daveallie/crosspoint
 - **UTF-8 filename support** - Cyrillic and other non-ASCII characters in file names
 - **EPUB 3 support** - Native navigation document (nav.xhtml) parsing with NCX fallback
 - **Hidden system folders** - Filters LOST.DIR, $RECYCLE.BIN, etc. from file browser
-- **Net Library (OPDS)** - Browse and download books from OPDS-compatible servers over WiFi (Project Gutenberg preconfigured; add more via `/opds.ini`)
+- **Net Library (OPDS)** - Browse and download books from OPDS-compatible servers over WiFi (Project Gutenberg preconfigured; add more via `/config/opds.ini`)
 - **Calibre Wireless Device** - Send books directly from Calibre desktop via WiFi using the wireless device connection feature
 
 ## Motivation

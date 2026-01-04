@@ -10,10 +10,10 @@ Papyrix supports user-customizable themes stored on the SD card. Themes control 
 
 ### Theme File Location
 
-Theme files are stored in the `/themes/` directory on the SD card:
+Theme files are stored in the `/config/themes/` directory on the SD card:
 
 ```
-/themes/
+/config/themes/
 ├── light.theme      # Default light theme
 ├── dark.theme       # Default dark theme
 └── my-custom.theme  # Your custom theme
@@ -26,7 +26,7 @@ When you first use the device, default `light.theme` and `dark.theme` files are 
 1. Copy [example.theme](example.theme) or an existing theme file from your device
 2. Rename it (e.g., `my-custom.theme`)
 3. Edit the file with any text editor
-4. Place it in `/themes/` on your SD card
+4. Place it in `/config/themes/` on your SD card
 5. Restart the device and select your theme in **Settings > Theme**
 
 ### Theme File Format
@@ -166,10 +166,10 @@ Papyrix supports loading custom fonts from the SD card. Fonts must be pre-conver
 
 ### Font File Location
 
-Custom fonts are stored in the `/fonts/` directory, organized by font family:
+Custom fonts are stored in the `/config/fonts/` directory, organized by font family:
 
 ```
-/fonts/
+/config/fonts/
 ├── my-font/
 │   ├── regular.epdfont
 │   ├── bold.epdfont
@@ -245,7 +245,7 @@ my-font/
 └── bold_italic.epdfont
 ```
 
-Copy the entire folder to `/fonts/` on your SD card.
+Copy the entire folder to `/config/fonts/` on your SD card.
 
 #### Recommended Font Sizes
 
@@ -275,7 +275,7 @@ ui_font = my-font
 reader_font = my-font
 ```
 
-The font family name must match the directory name under `/fonts/`.
+The font family name must match the directory name under `/config/fonts/`.
 
 ### Supported Characters
 
@@ -313,18 +313,21 @@ Here's the complete SD card structure for customization:
 
 ```
 /
-├── themes/
-│   ├── light.theme
-│   ├── dark.theme
-│   └── custom.theme
-├── fonts/
-│   ├── my-reader-font/
-│   │   ├── regular.epdfont
-│   │   ├── bold.epdfont
-│   │   ├── italic.epdfont
-│   │   └── bold_italic.epdfont
-│   └── my-ui-font/
-│       └── regular.epdfont
+├── config/
+│   ├── calibre.ini
+│   ├── opds.ini
+│   ├── themes/
+│   │   ├── light.theme
+│   │   ├── dark.theme
+│   │   └── custom.theme
+│   └── fonts/
+│       ├── my-reader-font/
+│       │   ├── regular.epdfont
+│       │   ├── bold.epdfont
+│       │   ├── italic.epdfont
+│       │   └── bold_italic.epdfont
+│       └── my-ui-font/
+│           └── regular.epdfont
 ├── sleep.bmp              # Custom sleep image (optional)
 └── sleep/                 # Multiple sleep images (optional)
     ├── image1.bmp

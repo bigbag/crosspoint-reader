@@ -111,7 +111,7 @@ The book is deleted from your Papyrix's SD card.
 
 ### Device Settings File
 
-Settings are stored in `/calibre.ini` on your SD card:
+Settings are stored in `/config/calibre.ini` on your SD card:
 
 ```ini
 [Settings]
@@ -128,7 +128,7 @@ password =
 
 If you want to require a password for connections:
 
-1. Edit `/calibre.ini` on your SD card:
+1. Edit `/config/calibre.ini` on your SD card:
    ```ini
    [Settings]
    device_name = My E-Reader
@@ -159,7 +159,7 @@ Both passwords must match for the connection to work.
 **Problem:** "Password mismatch" or authentication error
 
 **Solutions:**
-1. Ensure the password in `/calibre.ini` matches Calibre's settings exactly
+1. Ensure the password in `/config/calibre.ini` matches Calibre's settings exactly
 2. Passwords are case-sensitive
 3. Try removing the password from both to test the connection
 

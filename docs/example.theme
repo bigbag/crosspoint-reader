@@ -1,5 +1,5 @@
 # Papyrix Theme Configuration
-# Copy this file to /themes/ on your SD card and rename it
+# Copy this file to /config/themes/ on your SD card and rename it
 # Edit values below and restart device to apply
 
 [colors]
@@ -34,8 +34,8 @@ front_buttons = bclr
 
 [fonts]
 # Custom UI font family name (leave empty for builtin UI font)
-# Must match directory name under /fonts/ on SD card
+# Must match directory name under /config/fonts/ on SD card
 ui_font =
 # Custom reader font family name (leave empty for builtin Reader font)
-# Must match directory name under /fonts/ on SD card
+# Must match directory name under /config/fonts/ on SD card
 reader_font =
