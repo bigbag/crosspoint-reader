@@ -37,8 +37,8 @@ class CrossPointSettings {
   // Swapped: Next, Previous
   enum SIDE_BUTTON_LAYOUT { PREV_NEXT = 0, NEXT_PREV = 1 };
 
-  // Sleep timeout options (in minutes)
-  enum SLEEP_TIMEOUT { SLEEP_5_MIN = 0, SLEEP_10_MIN = 1, SLEEP_15_MIN = 2, SLEEP_30_MIN = 3 };
+  // Auto-sleep timeout options (in minutes)
+  enum AUTO_SLEEP_TIMEOUT { SLEEP_5_MIN = 0, SLEEP_10_MIN = 1, SLEEP_15_MIN = 2, SLEEP_30_MIN = 3, SLEEP_NEVER = 4 };
 
   // Pages per full refresh (to clear ghosting)
   enum PAGES_PER_REFRESH { PPR_1 = 0, PPR_5 = 1, PPR_10 = 2, PPR_15 = 3, PPR_30 = 4 };
@@ -67,7 +67,7 @@ class CrossPointSettings {
   // Show book details: cover as first page when reading, and title/author on home screen
   uint8_t showBookDetails = 1;
   // Auto-sleep timeout setting
-  uint8_t sleepTimeout = SLEEP_10_MIN;
+  uint8_t autoSleepMinutes = SLEEP_10_MIN;
   // Paragraph alignment for EPUB text
   uint8_t paragraphAlignment = ALIGN_JUSTIFIED;
   // Hyphenation enabled (soft hyphen support)
@@ -84,14 +84,16 @@ class CrossPointSettings {
 
   uint16_t getPowerButtonDuration() const { return shortPwrBtn ? 10 : 400; }
 
-  uint32_t getSleepTimeoutMs() const {
-    switch (sleepTimeout) {
+  uint32_t getAutoSleepTimeoutMs() const {
+    switch (autoSleepMinutes) {
       case SLEEP_5_MIN:
         return 5 * 60 * 1000;
       case SLEEP_15_MIN:
         return 15 * 60 * 1000;
       case SLEEP_30_MIN:
         return 30 * 60 * 1000;
+      case SLEEP_NEVER:
+        return 0;  // Disabled
       default:
         return 10 * 60 * 1000;
     }

@@ -331,8 +331,9 @@ void loop() {
     lastActivityTime = millis();  // Reset inactivity timer
   }
 
-  if (millis() - lastActivityTime >= SETTINGS.getSleepTimeoutMs()) {
-    Serial.printf("[%lu] [SLP] Auto-sleep triggered after %lu ms of inactivity\n", millis(), SETTINGS.getSleepTimeoutMs());
+  const auto autoSleepTimeout = SETTINGS.getAutoSleepTimeoutMs();
+  if (autoSleepTimeout > 0 && millis() - lastActivityTime >= autoSleepTimeout) {
+    Serial.printf("[%lu] [SLP] Auto-sleep triggered after %lu ms of inactivity\n", millis(), autoSleepTimeout);
     enterDeepSleep();
     // This should never be hit as `enterDeepSleep` calls esp_deep_sleep_start
     return;

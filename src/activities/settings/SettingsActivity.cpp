@@ -16,7 +16,7 @@ constexpr const char* statusBarValues[] = {"None", "No Progress", "Full"};
 constexpr const char* fontSizeValues[] = {"Small", "Normal", "Large"};
 constexpr const char* pagesPerRefreshValues[] = {"1", "5", "10", "15", "30"};
 constexpr const char* orientationValues[] = {"Portrait", "Landscape CW", "Inverted", "Landscape CCW"};
-constexpr const char* sleepTimeoutValues[] = {"5 min", "10 min", "15 min", "30 min"};
+constexpr const char* autoSleepValues[] = {"5 min", "10 min", "15 min", "30 min", "Never"};
 constexpr const char* paragraphAlignmentValues[] = {"Justified", "Left", "Center", "Right"};
 
 constexpr int settingsCount = 17;
@@ -34,7 +34,7 @@ const SettingInfo settingsList[settingsCount] = {
     {"Show Book Details", SettingType::TOGGLE, &CrossPointSettings::showBookDetails, nullptr, 0},
     // Device Settings
     {"Pages Per Refresh", SettingType::ENUM, &CrossPointSettings::pagesPerRefresh, pagesPerRefreshValues, 5},
-    {"Sleep Timeout", SettingType::ENUM, &CrossPointSettings::sleepTimeout, sleepTimeoutValues, 4},
+    {"Auto Sleep Timeout", SettingType::ENUM, &CrossPointSettings::autoSleepMinutes, autoSleepValues, 5},
     {"Sleep Screen", SettingType::ENUM, &CrossPointSettings::sleepScreen, sleepScreenValues, 4},
     {"Short Power Button Click", SettingType::TOGGLE, &CrossPointSettings::shortPwrBtn, nullptr, 0},
     // Actions

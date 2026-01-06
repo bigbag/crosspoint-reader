@@ -36,7 +36,7 @@ bool CrossPointSettings::saveToFile() const {
   serialization::writePod(outputFile, pagesPerRefresh);
   serialization::writePod(outputFile, sideButtonLayout);
   serialization::writePod(outputFile, showBookDetails);
-  serialization::writePod(outputFile, sleepTimeout);
+  serialization::writePod(outputFile, autoSleepMinutes);
   serialization::writePod(outputFile, paragraphAlignment);
   serialization::writePod(outputFile, hyphenation);
   serialization::writePod(outputFile, textAntiAliasing);
@@ -86,7 +86,7 @@ bool CrossPointSettings::loadFromFile() {
     if (++settingsRead >= fileSettingsCount) break;
     serialization::readPod(inputFile, showBookDetails);
     if (++settingsRead >= fileSettingsCount) break;
-    serialization::readPod(inputFile, sleepTimeout);
+    serialization::readPod(inputFile, autoSleepMinutes);
     if (++settingsRead >= fileSettingsCount) break;
     serialization::readPod(inputFile, paragraphAlignment);
     if (++settingsRead >= fileSettingsCount) break;
