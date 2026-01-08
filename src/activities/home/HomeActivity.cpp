@@ -38,7 +38,7 @@ void HomeActivity::onEnter() {
     }
 
     // Check file extension and try to load metadata
-    if (StringUtils::checkFileExtension(lastBookTitle, ".epub")) {
+    if (StringUtils::isEpubFile(lastBookTitle)) {
       // Always try to load EPUB metadata for home screen display
       Epub epub(APP_STATE.openEpubPath, PAPYRIX_DIR);
       if (epub.load(false)) {
@@ -49,16 +49,11 @@ void HomeActivity::onEnter() {
           lastBookAuthor = std::string(epub.getAuthor());
         }
       }
-    } else {
-      // Strip known extensions: .xtch, .text, .xtc, .txt
+    } else if (StringUtils::isXtcFile(lastBookTitle) || StringUtils::isTxtFile(lastBookTitle)) {
+      // Strip known extensions from non-EPUB files
       const size_t dotPos = lastBookTitle.find_last_of('.');
       if (dotPos != std::string::npos) {
-        if (StringUtils::checkFileExtension(lastBookTitle, ".xtch") ||
-            StringUtils::checkFileExtension(lastBookTitle, ".text") ||
-            StringUtils::checkFileExtension(lastBookTitle, ".xtc") ||
-            StringUtils::checkFileExtension(lastBookTitle, ".txt")) {
-          lastBookTitle.resize(dotPos);
-        }
+        lastBookTitle.resize(dotPos);
       }
     }
   }

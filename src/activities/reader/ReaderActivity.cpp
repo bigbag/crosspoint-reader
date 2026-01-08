@@ -21,16 +21,6 @@ std::string ReaderActivity::extractFolderPath(const std::string& filePath) {
   return filePath.substr(0, lastSlash);
 }
 
-bool ReaderActivity::isXtcFile(const std::string& path) {
-  return StringUtils::checkFileExtension(path, ".xtc") ||
-         StringUtils::checkFileExtension(path, ".xtch");
-}
-
-bool ReaderActivity::isTxtFile(const std::string& path) {
-  return StringUtils::checkFileExtension(path, ".txt") ||
-         StringUtils::checkFileExtension(path, ".text");
-}
-
 std::unique_ptr<Epub> ReaderActivity::loadEpub(const std::string& path) {
   if (!SdMan.exists(path.c_str())) {
     Serial.printf("[%lu] [   ] File does not exist: %s\n", millis(), path.c_str());
@@ -81,7 +71,7 @@ void ReaderActivity::onSelectBookFile(const std::string& path) {
   exitActivity();
   enterNewActivity(new FullScreenMessageActivity(renderer, mappedInput, "Loading..."));
 
-  if (isXtcFile(path)) {
+  if (StringUtils::isXtcFile(path)) {
     // Check if we have enough contiguous memory for XTC loading
     // After WiFi use, heap can be fragmented even with plenty of free memory
     const size_t largestBlock = heap_caps_get_largest_free_block(MALLOC_CAP_8BIT);
@@ -113,7 +103,7 @@ void ReaderActivity::onSelectBookFile(const std::string& path) {
       delay(2000);
       onGoToFileSelection();
     }
-  } else if (isTxtFile(path)) {
+  } else if (StringUtils::isTxtFile(path)) {
     // Load TXT file
     auto txt = loadTxt(path);
     if (txt) {
@@ -185,14 +175,14 @@ void ReaderActivity::onEnter() {
 
   currentBookPath = initialBookPath;
 
-  if (isXtcFile(initialBookPath)) {
+  if (StringUtils::isXtcFile(initialBookPath)) {
     auto xtc = loadXtc(initialBookPath);
     if (!xtc) {
       onGoBack();
       return;
     }
     onGoToXtcReader(std::move(xtc));
-  } else if (isTxtFile(initialBookPath)) {
+  } else if (StringUtils::isTxtFile(initialBookPath)) {
     auto txt = loadTxt(initialBookPath);
     if (!txt) {
       onGoBack();

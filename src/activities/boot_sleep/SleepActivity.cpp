@@ -16,20 +16,6 @@
 #include "images/PapyrixLogo.h"
 #include "util/StringUtils.h"
 
-namespace {
-// Check if path has XTC extension (.xtc or .xtch)
-bool isXtcFile(const std::string& path) {
-  return StringUtils::checkFileExtension(path, ".xtc") ||
-         StringUtils::checkFileExtension(path, ".xtch");
-}
-
-// Check if path has TXT extension (.txt or .text)
-bool isTxtFile(const std::string& path) {
-  return StringUtils::checkFileExtension(path, ".txt") ||
-         StringUtils::checkFileExtension(path, ".text");
-}
-}  // namespace
-
 void SleepActivity::onEnter() {
   Activity::onEnter();
   renderPopup("Entering Sleep...");
@@ -199,7 +185,7 @@ void SleepActivity::renderCoverSleepScreen() const {
   std::string coverBmpPath;
 
   // Check if the current book is XTC, TXT, or EPUB
-  if (isXtcFile(APP_STATE.openEpubPath)) {
+  if (StringUtils::isXtcFile(APP_STATE.openEpubPath)) {
     // Handle XTC file
     Xtc lastXtc(APP_STATE.openEpubPath, PAPYRIX_DIR);
     if (!lastXtc.load()) {
@@ -213,7 +199,7 @@ void SleepActivity::renderCoverSleepScreen() const {
     }
 
     coverBmpPath = lastXtc.getCoverBmpPath();
-  } else if (isTxtFile(APP_STATE.openEpubPath)) {
+  } else if (StringUtils::isTxtFile(APP_STATE.openEpubPath)) {
     // Handle TXT file
     Txt lastTxt(APP_STATE.openEpubPath, PAPYRIX_DIR);
     if (!lastTxt.load()) {

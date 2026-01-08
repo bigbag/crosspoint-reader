@@ -9,6 +9,7 @@
 
 #include "html/FilesPageHtml.generated.h"
 #include "html/HomePageHtml.generated.h"
+#include "util/StringUtils.h"
 
 
 // Static variables for upload handling (declared early so stop() can clear them)
@@ -208,7 +209,7 @@ void CrossPointWebServer::scanFiles(const char* path, const std::function<void(F
         info.isEpub = false;
       } else {
         info.size = file.size();
-        info.isEpub = isEpubFile(info.name);
+        info.isEpub = StringUtils::isEpubFile(std::string(info.name.c_str()));
       }
 
       callback(info);
@@ -218,12 +219,6 @@ void CrossPointWebServer::scanFiles(const char* path, const std::function<void(F
     file = root.openNextFile();
   }
   root.close();
-}
-
-bool CrossPointWebServer::isEpubFile(const String& filename) const {
-  String lower = filename;
-  lower.toLowerCase();
-  return lower.endsWith(".epub");
 }
 
 void CrossPointWebServer::handleFileList() const { server->send(200, "text/html", FilesPageHtml); }

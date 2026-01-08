@@ -16,4 +16,12 @@ std::string sanitizeFilename(const std::string& name, size_t maxLength = 100);
  */
 bool checkFileExtension(const std::string& fileName, const char* extension);
 
+/**
+ * File type checks (case-insensitive).
+ */
+bool isEpubFile(const std::string& path);
+bool isXtcFile(const std::string& path);   // .xtc or .xtch
+bool isTxtFile(const std::string& path);   // .txt or .text
+bool isSupportedBookFile(const std::string& path);  // epub, xtc, xtch, txt, text
+
 }  // namespace StringUtils

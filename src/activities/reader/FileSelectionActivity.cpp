@@ -60,11 +60,7 @@ void FileSelectionActivity::loadFiles() {
       files.emplace_back(std::string(name) + "/");
     } else {
       auto filename = std::string(name);
-      if (StringUtils::checkFileExtension(filename, ".epub") ||
-          StringUtils::checkFileExtension(filename, ".xtch") ||
-          StringUtils::checkFileExtension(filename, ".text") ||
-          StringUtils::checkFileExtension(filename, ".xtc") ||
-          StringUtils::checkFileExtension(filename, ".txt")) {
+      if (StringUtils::isSupportedBookFile(filename)) {
         files.emplace_back(filename);
       }
     }
